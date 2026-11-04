@@ -138,10 +138,12 @@ Or paste `contracts/plumbline.py` into the GenLayer Studio and deploy it with no
 ```bash
 pip install -r requirements.txt       # genlayer-test, genvm-linter
 genvm-lint check contracts/plumbline.py
-python3 -m pytest -q                  # no network; about 40 seconds without the fuzz walks, 2 minutes with them
+python3 -m pytest -q                  # about 40 seconds without the fuzz walks, 3 minutes with them
 ```
 
 The suite runs the contract in the genlayer-test direct runner with mocked pages and a mocked inspector. Closures handed to the VM are checked for pickling.
+
+The first run downloads the GenVM SDK bundle (one time, cached in `~/.cache/gltest-direct`), so it needs access to github.com. The suite pins GenVM `v0.2.16` in `tests/direct/conftest.py`: the runner's default is GitHub's newest release, and GenVM 0.3.x renamed the bundle it looks for, which ends in `HTTP Error 404`. Set `GENVM_VERSION=<tag>` to try another release.
 
 | File | What it covers |
 |---|---|

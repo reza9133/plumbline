@@ -1,10 +1,16 @@
 """Shared helpers for the direct-mode suite (genlayer-test fixtures)."""
 
 import json
+import os
 import sys
 from datetime import datetime, timezone
 
 import pytest
+
+# The direct runner downloads a GenVM release to get the SDK. Left alone it follows GitHub's "latest" release, and
+# GenVM 0.3.x no longer ships genvm-universal.tar.xz (renamed), which ends in HTTP 404. Pin the last release that does.
+# Override with GENVM_VERSION=<tag> if you want to try another one.
+GENVM_VERSION = os.environ.get("GENVM_VERSION", "v0.2.16")
 
 CONTRACT = "contracts/plumbline.py"
 MODULE = "_contract_plumbline"
@@ -109,7 +115,7 @@ def deploy(direct_deploy, direct_vm):
     at(direct_vm, 0)
     direct_vm.check_pickling = True  # the closures handed to the VM must be serializable
     _forget_contract_class()
-    c = direct_deploy(CONTRACT)
+    c = direct_deploy(CONTRACT, sdk_version=GENVM_VERSION)
     mod = sys.modules[MODULE]
     mod._Wire = Wire
     Wire.sent = []
