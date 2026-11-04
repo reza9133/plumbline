@@ -1,0 +1,9 @@
+.env
+.plumbline-address
+node_modules/
+__pycache__/
+.pytest_cache/
+*.pyc
+artifacts/
+reports/*
+!reports/.gitkeep
