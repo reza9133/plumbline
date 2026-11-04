@@ -1,0 +1,1511 @@
+{
+  "title": "Plumbline live test on Studionet",
+  "network": "studionet",
+  "rpc": "https://studio.genlayer.com/api",
+  "contract": "0x88Cda1E737d8Fb939BC4aE9F3A4Ca958d0A27d4c",
+  "startedAt": "2026-11-04T15:53:20.203Z",
+  "finishedAt": "2026-11-04T16:09:37.820Z",
+  "finished": true,
+  "accounts": {
+    "publisher": "0x8dcC905663BAC99Ebd74Ec255768bc323B974aE3",
+    "watcher": "0x5d4Bd9e884E38984D42B6ea46123a03048540ab1",
+    "beneficiary": "0xFa67De6e7fd2754797C81EdEFa386b3D1cbFb765",
+    "stranger": "0x98A3ba41a5B95Be1B203582E3F69fA6fc02e4f9d"
+  },
+  "inputs": {
+    "scenarios": [
+      "basics",
+      "adversarial",
+      "dark",
+      "anchors",
+      "bound",
+      "life"
+    ],
+    "page": "https://www.iana.org/help/example-domains",
+    "bond": "20000000000000000",
+    "term": 240,
+    "cure": 60,
+    "gap": 60
+  },
+  "readings": [
+    {
+      "scenario": "dark",
+      "stage": "activate",
+      "kind": "DARK",
+      "detail": "-",
+      "note": "The page could not be read."
+    },
+    {
+      "scenario": "anchors",
+      "stage": "activate",
+      "kind": "BREACH",
+      "detail": "anchor:2,missing:2",
+      "note": "Tenet 1 is present verbatim; Tenet 2 has no corresponding promise on the page."
+    },
+    {
+      "scenario": "bound",
+      "stage": "activate",
+      "kind": "BREACH",
+      "detail": "unbound",
+      "note": "The page clearly states the tenet."
+    },
+    {
+      "scenario": "life",
+      "stage": "activate",
+      "kind": "CLEAN",
+      "detail": "-",
+      "note": "The page explicitly states the maintenance purpose and the usage rights for example domains as defined in the tenets."
+    },
+    {
+      "scenario": "life",
+      "stage": "inspect",
+      "kind": "DRIFT",
+      "detail": "unsure:1,unsure:2",
+      "note": ""
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "setup",
+      "status": "done",
+      "checks": [
+        {
+          "name": "the contract answers",
+          "ok": true,
+          "detail": "0x88Cda1E737d8Fb939BC4aE9F3A4Ca958d0A27d4c"
+        }
+      ],
+      "steps": [],
+      "notes": [
+        "deployed 0x88Cda1E737d8Fb939BC4aE9F3A4Ca958d0A27d4c"
+      ]
+    },
+    {
+      "name": "basics",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "create a draft succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the new covenant is the newest one of the publisher",
+          "ok": true,
+          "detail": "id 0, covenants before 0"
+        },
+        {
+          "name": "the contract holds exactly the bond that was attached",
+          "ok": true,
+          "detail": "0.02 GEN"
+        },
+        {
+          "name": "a new covenant is a draft with the full bond",
+          "ok": true,
+          "detail": "NEW, 0.02 GEN"
+        },
+        {
+          "name": "the covenant records the beneficiary and the limits",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "add_tenet succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "add_tenet succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "both tenets are stored",
+          "ok": true,
+          "detail": "[\"documentation purposes\",\"without prior coordination\"]"
+        },
+        {
+          "name": "the books balance with a locked bond",
+          "ok": true,
+          "detail": "deposited 0.02 GEN, paid 0 GEN, owed 0 GEN, locked 0.02 GEN"
+        },
+        {
+          "name": "the locked total includes the bond",
+          "ok": true,
+          "detail": "0.02 GEN"
+        },
+        {
+          "name": "cancel succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the draft is cancelled and its bond is released",
+          "ok": true,
+          "detail": "CANCELLED, bond 0"
+        },
+        {
+          "name": "the publisher collects the returned bond: collect succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the publisher collects the returned bond: the contract paid out exactly 0.02 GEN",
+          "ok": true,
+          "detail": "balance moved by 0.02 GEN"
+        },
+        {
+          "name": "the publisher collects the returned bond: nothing is owed any more",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the books balance",
+          "ok": true,
+          "detail": "deposited 0.02 GEN, paid 0.02 GEN, owed 0 GEN, locked 0 GEN"
+        },
+        {
+          "name": "the same page can be used again after a cancel succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the new covenant is the newest one of the publisher",
+          "ok": true,
+          "detail": "id 1, covenants before 1"
+        },
+        {
+          "name": "the contract holds exactly the bond that was attached",
+          "ok": true,
+          "detail": "0.02 GEN"
+        },
+        {
+          "name": "cancel succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the draft is cancelled and its bond is released",
+          "ok": true,
+          "detail": "CANCELLED, bond 0"
+        },
+        {
+          "name": "the publisher collects the returned bond: collect succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the publisher collects the returned bond: the contract paid out exactly 0.02 GEN",
+          "ok": true,
+          "detail": "balance moved by 0.02 GEN"
+        },
+        {
+          "name": "the publisher collects the returned bond: nothing is owed any more",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the books balance",
+          "ok": true,
+          "detail": "deposited 0.04 GEN, paid 0.04 GEN, owed 0 GEN, locked 0 GEN"
+        }
+      ],
+      "steps": [
+        {
+          "label": "create a draft",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "20000000000000000",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xabfb9cba2be666cc2650936ac435e3fb8f3477591b68754b9c6f4708f13aa1be",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "add_tenet",
+          "fn": "add_tenet",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x5e5638590d91a7175ae8616a84d80d991996f0edc5dd7a996b9d3ddc35ddc9b1",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "add_tenet",
+          "fn": "add_tenet",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x4666dd34569e12c2c9643e85dc4cd0e97765143313d6995c79a09dc72f6f7b15",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "cancel",
+          "fn": "cancel",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x6d1f40c6bceb288a085f5cbd55a14adeec305fa402ababc419d94a452e348133",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "the publisher collects the returned bond",
+          "fn": "collect",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xe8228898c9c5c12472d40d90c78fb45900b143cf905eacd41d14289d54888844",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "the same page can be used again after a cancel",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "20000000000000000",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xe0fda2041a168e9a0ccfc7f104a5caceb6c1fbd7411d99049e50375353047e6b",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "cancel",
+          "fn": "cancel",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x30eeca42aca046886ce70092597469903ae24a74750e6193541e86d4907ddb69",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "the publisher collects the returned bond",
+          "fn": "collect",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xc6ddebd533b4a05b72ba52b4ec99ddb61744058268acd42695350aebade0838f",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        }
+      ],
+      "notes": [
+        "publisher balance 0.98 GEN -> 1 GEN (the difference to 0.02 GEN is the fee, if the network charges one)",
+        "publisher balance 0.98 GEN -> 1 GEN (the difference to 0.02 GEN is the fee, if the network charges one)"
+      ]
+    },
+    {
+      "name": "adversarial",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "create a draft to attack succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the new covenant is the newest one of the publisher",
+          "ok": true,
+          "detail": "id 2, covenants before 2"
+        },
+        {
+          "name": "the contract holds exactly the bond that was attached",
+          "ok": true,
+          "detail": "0.02 GEN"
+        },
+        {
+          "name": "add_tenet succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "add_tenet by a stranger is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "add_tenet by a stranger changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "top_up by a stranger is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "top_up by a stranger changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "activate by a stranger is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "activate by a stranger changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "cancel by a stranger is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "cancel by a stranger changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "inspect a draft is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "inspect a draft changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "mature a draft is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "mature a draft changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "collect with nothing owed is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "collect with nothing owed changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "a steering tenet is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "a steering tenet changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "a duplicate tenet is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "a duplicate tenet changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "a tenet that is too short is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "a tenet that is too short changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "the publisher as its own beneficiary is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "the publisher as its own beneficiary changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "a private address as the page is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "a private address as the page changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "a term that is too short is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "a term that is too short changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "a bond below the minimum is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "a bond below the minimum changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "a second live covenant on the same page is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "a second live covenant on the same page changed no totals",
+          "ok": true,
+          "detail": "3/0/60000000000000000/40000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "create a draft without tenets succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the new covenant is the newest one of the publisher",
+          "ok": true,
+          "detail": "id 3, covenants before 3"
+        },
+        {
+          "name": "the contract holds exactly the bond that was attached",
+          "ok": true,
+          "detail": "0.02 GEN"
+        },
+        {
+          "name": "activate without a tenet is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "activate without a tenet changed no totals",
+          "ok": true,
+          "detail": "4/0/80000000000000000/40000000000000000/0/40000000000000000"
+        },
+        {
+          "name": "cancel succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the draft is cancelled and its bond is released",
+          "ok": true,
+          "detail": "CANCELLED, bond 0"
+        },
+        {
+          "name": "the publisher collects the returned bond: collect succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the publisher collects the returned bond: the contract paid out exactly 0.02 GEN",
+          "ok": true,
+          "detail": "balance moved by 0.02 GEN"
+        },
+        {
+          "name": "the publisher collects the returned bond: nothing is owed any more",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the books balance",
+          "ok": true,
+          "detail": "deposited 0.08 GEN, paid 0.06 GEN, owed 0 GEN, locked 0.02 GEN"
+        },
+        {
+          "name": "cancel succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the draft is cancelled and its bond is released",
+          "ok": true,
+          "detail": "CANCELLED, bond 0"
+        },
+        {
+          "name": "the publisher collects the returned bond: collect succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the publisher collects the returned bond: the contract paid out exactly 0.02 GEN",
+          "ok": true,
+          "detail": "balance moved by 0.02 GEN"
+        },
+        {
+          "name": "the publisher collects the returned bond: nothing is owed any more",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the books balance",
+          "ok": true,
+          "detail": "deposited 0.08 GEN, paid 0.08 GEN, owed 0 GEN, locked 0 GEN"
+        }
+      ],
+      "steps": [
+        {
+          "label": "create a draft to attack",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "20000000000000000",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xabafbadcacf84c736807e504534e446c3fc5db0238a2dfd48e98078da1375754",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "add_tenet",
+          "fn": "add_tenet",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x504843f7ef7d0727c005ad79397d53af2c08550e8a9c69f400d3bfd53747df94",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "add_tenet by a stranger",
+          "fn": "add_tenet",
+          "caller": "watcher",
+          "value": "0",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x449c8c07b3dae7d716fd436cf7f66c99cbb605b8e502a25c87ee621babdaa725",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "top_up by a stranger",
+          "fn": "top_up",
+          "caller": "watcher",
+          "value": "1000000000000000",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0xce4733d604e3503ddc56baf144ab55df3fa9b9fd57aafb1bafbd2c3b7cf7db09",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "activate by a stranger",
+          "fn": "activate",
+          "caller": "watcher",
+          "value": "0",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x0180746197062a3e4c5ffd60f976d791baa859929113d0e204f8aa999a9c5bbf",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "cancel by a stranger",
+          "fn": "cancel",
+          "caller": "watcher",
+          "value": "0",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x4cadbabffd7dcb16789692f6870652390de2404b6af9391e4b04ca641677fd51",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "inspect a draft",
+          "fn": "inspect",
+          "caller": "watcher",
+          "value": "0",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x242f7bf94b57f3f9fe208e71ef1b22dea3ad0ccfe145b84aaafecac264bf2b94",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "mature a draft",
+          "fn": "mature",
+          "caller": "stranger",
+          "value": "0",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x13dcd829d8d0f1c8bd00c466fd3c24906a1ad83abf0880b3ab766657f1894320",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "collect with nothing owed",
+          "fn": "collect",
+          "caller": "stranger",
+          "value": "0",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0xba33f53a9633e586f4b2c216c774438f76c28184f80909c5a3ca479ab340b3ed",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "a steering tenet",
+          "fn": "add_tenet",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x53730888c1d175bc6ca8172815575ddddfeea09a30c94ecd3fc8a2b6c2c06459",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "a duplicate tenet",
+          "fn": "add_tenet",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x8d3a0063ca0a62b73525f3bc072704bb50fa3cd28897896821ba92d33a86cc6a",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "a tenet that is too short",
+          "fn": "add_tenet",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0xdd5efd3875c9f16bed9110a09952122f5030a65db1a019bfbfbba37c18ac087f",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "the publisher as its own beneficiary",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "20000000000000000",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x926cbe46ba6c9f1217c37c756dfde9b551134d20482eafe46a5f136768a6c936",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "a private address as the page",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "20000000000000000",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0xdf68e89d90026a5a9fe9aed01be09249005479b0d48ce3fdb1b718dd0e0e8b27",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "a term that is too short",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "20000000000000000",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x3b19a038624ada93fc5077646cff99600cbd0e175a4712ff0e461fc0717318c6",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "a bond below the minimum",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "1000000000000000",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x0d0c1112dddb734c13ed77b355786cbbc346c8e78a5b029b9245251dc0da2938",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "a second live covenant on the same page",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "20000000000000000",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x99842f6da82d9e3e62c9c383e03ce6edc4fcbc1feb07b7b982aea3fc2c16339d",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "create a draft without tenets",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "20000000000000000",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xfaae97d5c35acaa5e147ac45a3b473fa2a754fb6c95f490deb6760f433a74af9",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "activate without a tenet",
+          "fn": "activate",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x35bb88d1aa6215c83839f43dee3bfef8022617e0664dc28cf3b901f95eb7b68d",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "cancel",
+          "fn": "cancel",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x7ea001918a029081363530ebb5dd3847a6f65889b5efccbb9d6d880a7f21ffb7",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "the publisher collects the returned bond",
+          "fn": "collect",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x47443409eca8697237e6b816cf0bfe4bc0956ea84d7a7b50933ee723dac925ce",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "cancel",
+          "fn": "cancel",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xde78da914dafb9ba8928120e3e83b23e7996547a7d204d581edfb67f9b8cc023",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "the publisher collects the returned bond",
+          "fn": "collect",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x95dafcda5c116bddd19c9858569fc3f38fd076bdd9fc3a6822d0ed878d00aed9",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        }
+      ],
+      "notes": [
+        "publisher balance 0.879 GEN -> 0.899 GEN (the difference to 0.02 GEN is the fee, if the network charges one)",
+        "publisher balance 0.899 GEN -> 0.919 GEN (the difference to 0.02 GEN is the fee, if the network charges one)"
+      ]
+    },
+    {
+      "name": "dark",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "create a covenant on an unreachable page succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the new covenant is the newest one of the publisher",
+          "ok": true,
+          "detail": "id 4, covenants before 4"
+        },
+        {
+          "name": "the contract holds exactly the bond that was attached",
+          "ok": true,
+          "detail": "0.02 GEN"
+        },
+        {
+          "name": "add_tenet succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "activate 4 was decided",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "an unreadable page is a DARK reading, not a breach",
+          "ok": true,
+          "detail": "DARK, breaches 0"
+        },
+        {
+          "name": "the draft stays a draft",
+          "ok": true,
+          "detail": "NEW"
+        },
+        {
+          "name": "cancel succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the draft is cancelled and its bond is released",
+          "ok": true,
+          "detail": "CANCELLED, bond 0"
+        },
+        {
+          "name": "the publisher collects the returned bond: collect succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the publisher collects the returned bond: the contract paid out exactly 0.02 GEN",
+          "ok": true,
+          "detail": "balance moved by 0.02 GEN"
+        },
+        {
+          "name": "the publisher collects the returned bond: nothing is owed any more",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the books balance",
+          "ok": true,
+          "detail": "deposited 0.1 GEN, paid 0.1 GEN, owed 0 GEN, locked 0 GEN"
+        }
+      ],
+      "steps": [
+        {
+          "label": "create a covenant on an unreachable page",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "20000000000000000",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x4efb08f0541241570b13184aa567992bd723e54b6057c15cfcee7df1c690b240",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "add_tenet",
+          "fn": "add_tenet",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x0ec6eb18b68b78cc20014639e401f3371345778cd8b81cd7fc83812731d3c36d",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "activate",
+          "fn": "activate",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x5d731c0411a10b31265ee45bcf811a1347ea2f89051e45edce5d2191f6a8c736",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "cancel",
+          "fn": "cancel",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x49bb5a2d90d2171fc609fcc4a9e15f6237baff09b54dbdc5ca3baa19e3065df3",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "the publisher collects the returned bond",
+          "fn": "collect",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x6193c2a1323789b790cef47b14cb9ae20b81735897b98b24e2669e204e8d6eec",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        }
+      ],
+      "notes": [
+        "publisher balance 0.899 GEN -> 0.899 GEN (the difference to 0.02 GEN is the fee, if the network charges one)"
+      ]
+    },
+    {
+      "name": "anchors",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "create a covenant with an anchor that is not on the page succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the new covenant is the newest one of the publisher",
+          "ok": true,
+          "detail": "id 5, covenants before 5"
+        },
+        {
+          "name": "the contract holds exactly the bond that was attached",
+          "ok": true,
+          "detail": "0.02 GEN"
+        },
+        {
+          "name": "add_tenet succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "add_tenet succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "activate 5 was decided",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the missing anchor is hard evidence that the validators agreed on",
+          "ok": true,
+          "detail": "BREACH anchor:2,missing:2"
+        },
+        {
+          "name": "the anchor that is on the page is not reported",
+          "ok": true,
+          "detail": "anchor:2,missing:2"
+        },
+        {
+          "name": "the draft stays a draft",
+          "ok": true,
+          "detail": "NEW"
+        },
+        {
+          "name": "cancel succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the draft is cancelled and its bond is released",
+          "ok": true,
+          "detail": "CANCELLED, bond 0"
+        },
+        {
+          "name": "the publisher collects the returned bond: collect succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the publisher collects the returned bond: the contract paid out exactly 0.02 GEN",
+          "ok": true,
+          "detail": "balance moved by 0.02 GEN"
+        },
+        {
+          "name": "the publisher collects the returned bond: nothing is owed any more",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the books balance",
+          "ok": true,
+          "detail": "deposited 0.12 GEN, paid 0.12 GEN, owed 0 GEN, locked 0 GEN"
+        }
+      ],
+      "steps": [
+        {
+          "label": "create a covenant with an anchor that is not on the page",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "20000000000000000",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x167857585c4c9b35a9fedef04a33c2723f72017b4c6745133c2f0c0d18e42b6f",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "add_tenet",
+          "fn": "add_tenet",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xf2b8af180378ae622af91aaa70aa356bee11f0709c0a3df6b66ab1946bb4607d",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "add_tenet",
+          "fn": "add_tenet",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xfb1efc4dae6ddd0ddc3eed275ef1ae40bdf33de874834526e7971133cb7839a6",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "activate",
+          "fn": "activate",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xf088abb63c5c1fec673479a216865cde9f63e3fe72b5d4da420c201ee5be9ea1",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "cancel",
+          "fn": "cancel",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x99d278ba1a1cc137e4bbce774ac3cfc48f35d9a511447db8c6d02796f318c4d5",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "the publisher collects the returned bond",
+          "fn": "collect",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xfeab03d4a8f9b8fa3dc2db99547a28a6930b2e03c4f418cb23945da59f70aa89",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        }
+      ],
+      "notes": [
+        "publisher balance 0.899 GEN -> 0.919 GEN (the difference to 0.02 GEN is the fee, if the network charges one)"
+      ]
+    },
+    {
+      "name": "bound",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "create a bound covenant succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the new covenant is the newest one of the publisher",
+          "ok": true,
+          "detail": "id 6, covenants before 6"
+        },
+        {
+          "name": "the contract holds exactly the bond that was attached",
+          "ok": true,
+          "detail": "0.02 GEN"
+        },
+        {
+          "name": "add_tenet succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "activate 6 was decided",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "a page without the publisher's address is hard evidence",
+          "ok": true,
+          "detail": "BREACH unbound"
+        },
+        {
+          "name": "the draft stays a draft",
+          "ok": true,
+          "detail": "NEW"
+        },
+        {
+          "name": "cancel succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the draft is cancelled and its bond is released",
+          "ok": true,
+          "detail": "CANCELLED, bond 0"
+        },
+        {
+          "name": "the publisher collects the returned bond: collect succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the publisher collects the returned bond: the contract paid out exactly 0.02 GEN",
+          "ok": true,
+          "detail": "balance moved by 0.02 GEN"
+        },
+        {
+          "name": "the publisher collects the returned bond: nothing is owed any more",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the books balance",
+          "ok": true,
+          "detail": "deposited 0.14 GEN, paid 0.14 GEN, owed 0 GEN, locked 0 GEN"
+        }
+      ],
+      "steps": [
+        {
+          "label": "create a bound covenant",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "20000000000000000",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xdb0eeaa9438ec2a4f687c0815180988d2619d8eab80e65381852a8f79338c505",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "add_tenet",
+          "fn": "add_tenet",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xdc78f2cf38915f6a6c87cce14b54518e0eaad6a1073ddd2fa620d71924057495",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "activate",
+          "fn": "activate",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x323914e1f30002d9a1e6942d09dba16dde66ceb852f03b2be572783767fdbce6",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "cancel",
+          "fn": "cancel",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xc5702dad6f9708830d8a3bd07ca2e7db4343c0f36f320c385a8e79859207e98c",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "the publisher collects the returned bond",
+          "fn": "collect",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x5c00d1e8e5ae07fe5e302e8aebbd7bfcef2da7b2bc08d154fddf94ab6f7640a0",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        }
+      ],
+      "notes": [
+        "publisher balance 0.899 GEN -> 0.899 GEN (the difference to 0.02 GEN is the fee, if the network charges one)"
+      ]
+    },
+    {
+      "name": "life",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "create the covenant succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the new covenant is the newest one of the publisher",
+          "ok": true,
+          "detail": "id 7, covenants before 7"
+        },
+        {
+          "name": "the contract holds exactly the bond that was attached",
+          "ok": true,
+          "detail": "0.02 GEN"
+        },
+        {
+          "name": "add_tenet succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "add_tenet succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "activate 7 was decided",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the covenant is active and its term has a fixed end",
+          "ok": true,
+          "detail": "ends 1793808513"
+        },
+        {
+          "name": "a second reading inside the gap is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "a second reading inside the gap changed no totals",
+          "ok": true,
+          "detail": "8/4/160000000000000000/140000000000000000/0/20000000000000000"
+        },
+        {
+          "name": "top_up succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the bond grew by the top-up",
+          "ok": true,
+          "detail": "0.021 GEN"
+        },
+        {
+          "name": "the inspection was decided",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the reading is logged with the inspector",
+          "ok": true,
+          "detail": "DRIFT by 0x5d4Bd9e884E38984D42B6ea46123a03048540ab1"
+        },
+        {
+          "name": "a hard reading opens a warning and nothing else does",
+          "ok": true,
+          "detail": "ACTIVE, hard false"
+        },
+        {
+          "name": "the books balance",
+          "ok": true,
+          "detail": "deposited 0.161 GEN, paid 0.14 GEN, owed 0 GEN, locked 0.021 GEN"
+        },
+        {
+          "name": "mature before the term ends is refused by the contract",
+          "ok": true,
+          "detail": "ACCEPTED / ERROR"
+        },
+        {
+          "name": "mature before the term ends changed no totals",
+          "ok": true,
+          "detail": "8/5/161000000000000000/140000000000000000/0/21000000000000000"
+        },
+        {
+          "name": "mature succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the covenant matured and its bond is released",
+          "ok": true,
+          "detail": "MATURED, bond 0"
+        },
+        {
+          "name": "the publisher's record shows one kept covenant",
+          "ok": true,
+          "detail": "{\"kept\":1,\"broken\":0,\"live\":0}"
+        },
+        {
+          "name": "the whole bond, top-up included, is owed to the publisher",
+          "ok": true,
+          "detail": "0.021 GEN"
+        },
+        {
+          "name": "the publisher collects the matured bond: collect succeeds",
+          "ok": true,
+          "detail": "ACCEPTED / SUCCESS"
+        },
+        {
+          "name": "the publisher collects the matured bond: the contract paid out exactly 0.021 GEN",
+          "ok": true,
+          "detail": "balance moved by 0.021 GEN"
+        },
+        {
+          "name": "the publisher collects the matured bond: nothing is owed any more",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the books balance",
+          "ok": true,
+          "detail": "deposited 0.161 GEN, paid 0.161 GEN, owed 0 GEN, locked 0 GEN"
+        }
+      ],
+      "steps": [
+        {
+          "label": "create the covenant",
+          "fn": "create_covenant",
+          "caller": "publisher",
+          "value": "20000000000000000",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x54fc7b1a7d59227c48c31ca45fcc49f979fdc0ce786525a862d3e24eedb2f556",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "add_tenet",
+          "fn": "add_tenet",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x17c41d2efa369997be5ebe9707127f34e8ff142ecaab3346945c5de48224ab79",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "add_tenet",
+          "fn": "add_tenet",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x79846e74d5b029c05e0f3b62e9857fedda3659c2413760fe1977293e3456fc78",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "activate",
+          "fn": "activate",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0xaf7166e50431c985a4d163585f039cdf583ad34ae274ba2fe628f600fcad212c",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "a second reading inside the gap",
+          "fn": "inspect",
+          "caller": "watcher",
+          "value": "0",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x9f4b28d0bca0e6239cbf2fc37b3107a89ab5fdd018ff9590b302d63d8d857276",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "top_up",
+          "fn": "top_up",
+          "caller": "publisher",
+          "value": "1000000000000000",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x2eac5727502658aeb64de0fd6bae51a0af5f8c23dc45ea3fa69d9a140875818e",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "inspect",
+          "fn": "inspect",
+          "caller": "watcher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x2367475e0ca709c40291f0591901485be0c330a6c98ea0344edfa2ba9dab77c9",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "mature before the term ends",
+          "fn": "mature",
+          "caller": "stranger",
+          "value": "0",
+          "expectedFail": true,
+          "attempt": 1,
+          "hash": "0x026b200be41a8435892122f060c20b7e9c990c85c0f5268971452695c23db000",
+          "ok": false,
+          "status": "ACCEPTED / ERROR"
+        },
+        {
+          "label": "mature",
+          "fn": "mature",
+          "caller": "stranger",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x9c1d2bae167572129573618540ae706b1706cc2900e9fb954f8db1764b971d24",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        },
+        {
+          "label": "the publisher collects the matured bond",
+          "fn": "collect",
+          "caller": "publisher",
+          "value": "0",
+          "expectedFail": false,
+          "attempt": 1,
+          "hash": "0x98b1be4d6fd346bd9410b7576bcbd1085143c08cd89b4ff2c553d0ac5d1943d4",
+          "ok": true,
+          "status": "ACCEPTED / SUCCESS"
+        }
+      ],
+      "notes": [
+        "activation reading: CLEAN  The page explicitly states the maintenance purpose and the usage rights for example domains as defined in the tenets.",
+        "inspection reading: DRIFT unsure:1,unsure:2 ",
+        "publisher balance 0.898 GEN -> 0.898 GEN (the difference to 0.021 GEN is the fee, if the network charges one)"
+      ]
+    }
+  ],
+  "summary": {
+    "checks": 143,
+    "passed": 143,
+    "failed": 0,
+    "transactions": 57,
+    "skipped": 0
+  },
+  "statsAfter": {
+    "covenants": 8,
+    "readings": 5,
+    "warned": 0,
+    "cured": 0,
+    "broken": 0,
+    "matured": 1,
+    "cancelled": 7,
+    "deposited": "161000000000000000",
+    "paid": "161000000000000000",
+    "owed": "0",
+    "locked": "0"
+  }
+}
