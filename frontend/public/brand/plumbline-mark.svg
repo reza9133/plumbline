@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Plumbline">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b3868"/><stop offset="1" stop-color="#111730"/></linearGradient>
+    <linearGradient id="bl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#d89a28"/></linearGradient>
+    <linearGradient id="br" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a032"/><stop offset="1" stop-color="#7d4c0b"/></linearGradient>
+    <linearGradient id="rg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22e0cf"/><stop offset="1" stop-color="#c660ee"/></linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <path d="M9 40h7M48 40h7" stroke="#ffffff" stroke-opacity=".22" stroke-width="2" stroke-linecap="round"/>
+  <path d="M15 39a17 5.5 0 0 1 34 0" fill="none" stroke="url(#rg)" stroke-width="2.2" stroke-linecap="round" opacity=".75"/>
+  <path d="M32 9v15" stroke="#eef0fa" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="32" cy="8.5" r="2.7" fill="#eef0fa"/>
+  <path d="M32 23l-3 2-4 7 7 25z" fill="url(#bl)"/>
+  <path d="M32 23l3 2 4 7-7 25z" fill="url(#br)"/>
+  <path d="M29 25h6" stroke="#fff3c9" stroke-opacity=".7" stroke-width="1.2" stroke-linecap="round"/>
+  <path d="M15 39a17 5.5 0 0 0 34 0" fill="none" stroke="url(#rg)" stroke-width="2.2" stroke-linecap="round"/>
+</svg>

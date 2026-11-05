@@ -1,0 +1,190 @@
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/manrope';
+@import '@fontsource-variable/jetbrains-mono';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ themes ---
+   Two themes: "light" (warm paper) and "dim" (a dusky indigo, deliberately not black).
+   Colors are stored as space-separated RGB channels so Tailwind can apply opacity. */
+:root,
+[data-theme='light'] {
+  --c-bg: 245 241 232;
+  --c-surface: 255 253 248;
+  --c-surface2: 237 232 220;
+  --c-ink: 20 26 46;
+  --c-muted: 92 99 122;
+  --c-line: 214 207 192;
+  --c-brass: 162 108 14;
+  --c-cyan: 8 136 130;
+  --c-magenta: 156 52 196;
+  --c-ok: 20 128 80;
+  --c-warn: 186 112 6;
+  --c-bad: 196 36 50;
+  --c-shadow: 40 36 24;
+  --grid-line: 20 26 46 / 0.045;
+  color-scheme: light;
+}
+[data-theme='dim'] {
+  --c-bg: 27 33 56;
+  --c-surface: 37 45 76;
+  --c-surface2: 46 56 92;
+  --c-ink: 234 237 248;
+  --c-muted: 163 172 200;
+  --c-line: 64 75 112;
+  --c-brass: 236 183 80;
+  --c-cyan: 44 224 208;
+  --c-magenta: 204 106 244;
+  --c-ok: 74 208 144;
+  --c-warn: 246 192 84;
+  --c-bad: 255 104 112;
+  --c-shadow: 6 8 22;
+  --grid-line: 255 255 255 / 0.04;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  @apply bg-bg font-sans text-ink antialiased;
+  background-image: radial-gradient(1100px 600px at 82% -8%, rgb(var(--c-magenta) / 0.1), transparent 60%),
+    radial-gradient(900px 520px at 6% 8%, rgb(var(--c-cyan) / 0.09), transparent 60%),
+    linear-gradient(90deg, rgb(var(--grid-line)) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    72px 100%;
+  background-attachment: fixed;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+::selection {
+  background: rgb(var(--c-cyan) / 0.3);
+}
+h1,
+h2,
+h3 {
+  @apply font-display tracking-tight;
+}
+:focus-visible {
+  outline: 2px solid rgb(var(--c-cyan));
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+code,
+pre,
+kbd {
+  @apply font-mono;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line/70 bg-surface/90 shadow-card backdrop-blur;
+  }
+  .card-pad {
+    @apply card p-5 sm:p-6;
+  }
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-xl border border-line bg-surface px-4 py-2.5 text-sm font-semibold text-ink transition
+      hover:-translate-y-px hover:border-cyan/60 hover:shadow-glow active:translate-y-0 disabled:pointer-events-none disabled:opacity-45;
+  }
+  .btn-primary {
+    @apply btn border-transparent text-[#101428] hover:border-transparent;
+    background-image: linear-gradient(135deg, rgb(var(--c-brass)), #f4cf76 55%, rgb(var(--c-brass)));
+    background-size: 200% 100%;
+    background-position: 0 0;
+    transition:
+      background-position 0.5s ease,
+      transform 0.15s,
+      box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    background-position: 100% 0;
+  }
+  .btn-danger {
+    @apply btn border-bad/50 text-bad hover:border-bad hover:shadow-none;
+  }
+  .btn-ghost {
+    @apply btn border-transparent bg-transparent hover:bg-surface2/70 hover:shadow-none;
+  }
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold;
+  }
+  .input {
+    @apply w-full rounded-xl border border-line bg-bg/60 px-3.5 py-2.5 text-sm text-ink placeholder:text-muted/70 transition
+      focus:border-cyan focus:outline-none focus:ring-2 focus:ring-cyan/25;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted;
+  }
+  .eyebrow {
+    @apply font-mono text-xs font-semibold uppercase tracking-[0.2em] text-brass;
+  }
+  .link {
+    @apply font-semibold text-cyan underline decoration-cyan/40 underline-offset-4 transition hover:decoration-cyan;
+  }
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgb(var(--c-surface2) / 0.6) 25%,
+      rgb(var(--c-surface2) / 1) 37%,
+      rgb(var(--c-surface2) / 0.6) 63%
+    );
+    background-size: 200% 100%;
+    @apply animate-shimmer rounded-lg;
+  }
+  .prose-doc {
+    @apply text-[15.5px] leading-7 text-ink/90;
+  }
+  .prose-doc p {
+    @apply my-4;
+  }
+  .prose-doc h2 {
+    @apply mb-3 mt-12 scroll-mt-24 text-3xl font-semibold;
+  }
+  .prose-doc h3 {
+    @apply mb-2 mt-8 scroll-mt-24 text-xl font-semibold;
+  }
+  .prose-doc ul {
+    @apply my-4 list-disc space-y-1.5 pl-6 marker:text-brass;
+  }
+  .prose-doc ol {
+    @apply my-4 list-decimal space-y-2 pl-6 marker:font-bold marker:text-brass;
+  }
+  .prose-doc code:not(pre code) {
+    @apply rounded-md border border-line/60 bg-surface2/70 px-1.5 py-0.5 text-[0.86em];
+  }
+  .prose-doc a {
+    @apply link;
+  }
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.perspective {
+  perspective: 1100px;
+}
+.text-balance {
+  text-wrap: balance;
+}
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

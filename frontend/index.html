@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plumbline · Bonded public promises on GenLayer</title>
+    <meta
+      name="description"
+      content="Plumbline locks a bond behind a web page and the sentences it must keep saying. Validators re-read the page; if it stops standing behind its promises, the bond is slashed."
+    />
+    <meta name="theme-color" content="#f5f1e8" />
+    <meta property="og:title" content="Plumbline · Bonded public promises" />
+    <meta
+      property="og:description"
+      content="A bond behind every promise. Validators on GenLayer check that the page still says what it said."
+    />
+    <meta property="og:image" content="/brand/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/brand/plumbline-mark.svg" />
+    <link rel="apple-touch-icon" href="/mochi/mochi-avatar.png" />
+    <script>
+      // Set the theme before first paint so there is no flash.
+      (function () {
+        try {
+          var saved = localStorage.getItem('plumbline.theme');
+          var dim = saved ? saved === 'dim' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.setAttribute('data-theme', dim ? 'dim' : 'light');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
