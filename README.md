@@ -206,3 +206,13 @@ scripts/keys.mjs              creates and funds test accounts
 scripts/run-all.sh            lint + local tests + live run
 .devcontainer/                GitHub Codespaces setup
 ```
+
+## Frontend
+
+A multi-page app (light and dim themes, EIP-6963 wallets, full documentation, 3D scenes) lives in `frontend/`. It is configured for the Studionet deployment `0x88Cda1E737d8Fb939BC4aE9F3A4Ca958d0A27d4c`.
+
+```bash
+cd frontend && npm install && npm run dev
+```
+
+See `frontend/README.md` and `frontend/NOTES.md`.
