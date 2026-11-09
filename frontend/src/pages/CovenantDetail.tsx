@@ -1,4 +1,4 @@
-import { lazy, useMemo, useState } from 'react';
+import { Suspense, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
   AlertTriangle,
@@ -34,9 +34,10 @@ import { actionsFor, inspectorStake } from '../lib/actions';
 import { describeToken, LIMITS, splitBond, validateTenet } from '../lib/rules';
 import { formatDate, formatDuration, parseGen, relativeTime, sameAddress, shortHash } from '../lib/format';
 import { tenetTones } from '../lib/tones';
+import { lazyRetry } from '../lib/lazyRetry';
 import { StateDiagram } from '../components/StateDiagram';
 
-const PlumbWall = lazy(() => import('../three/PlumbWall'));
+const PlumbWall = lazyRetry(() => import('../three/PlumbWall'));
 
 const TONE_LABEL = {
   idle: 'Not read yet',
@@ -74,13 +75,17 @@ function Wall({ c }: { c: Covenant }) {
           </div>
         }
       >
-        <PlumbWall
-          tones={tones}
-          dim={theme === 'dim'}
-          wallHard={wallHard}
-          matured={c.state === 'MATURED'}
-          broken={c.state === 'BROKEN'}
-        />
+        <Suspense
+          fallback={<div className="grid h-full place-items-center text-sm text-muted">Loading 3D view…</div>}
+        >
+          <PlumbWall
+            tones={tones}
+            dim={theme === 'dim'}
+            wallHard={wallHard}
+            matured={c.state === 'MATURED'}
+            broken={c.state === 'BROKEN'}
+          />
+        </Suspense>
       </SceneGuard>
       <div className="pointer-events-none absolute bottom-3 left-3 flex flex-wrap gap-1.5 text-[11px] font-bold">
         {(['held', 'weak', 'missing', 'bad'] as const).map((t) => (

@@ -9,6 +9,7 @@ import { BuiltOnGenLayer, GenLayerLogo, PlumbMark, Wordmark } from './Logo';
 import { CopyButton } from './ui';
 import { MochiHead } from './Mochi';
 import { PageLoader } from './Spinners';
+import { ErrorBoundary } from './ErrorBoundary';
 import { setDemo } from '../chain/client';
 import { useDemo } from '../chain/hooks';
 
@@ -293,9 +294,11 @@ export function Layout() {
       <NetworkBanner />
       <DemoBanner />
       <main id="main" className="flex-1">
-        <Suspense fallback={<PageLoader />}>
-          <Outlet />
-        </Suspense>
+        <ErrorBoundary inline resetKey={loc.pathname}>
+          <Suspense fallback={<PageLoader />}>
+            <Outlet />
+          </Suspense>
+        </ErrorBoundary>
       </main>
       <Footer />
       <WalletModal />

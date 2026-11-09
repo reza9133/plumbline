@@ -7,7 +7,14 @@ import { ThemeProvider } from './theme/ThemeProvider';
 import { ToastProvider } from './components/Toast';
 import { WalletProvider } from './wallet/WalletProvider';
 import { TxProvider } from './tx/TxProvider';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { reloadOnce } from './lib/lazyRetry';
 import './index.css';
+
+// Vite fires this when a preloaded chunk 404s (typically after a redeploy): fetch the new index.html once.
+window.addEventListener('vite:preloadError', (e) => {
+  if (reloadOnce()) e.preventDefault();
+});
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 8_000, retry: 1, refetchOnWindowFocus: true } },
@@ -15,18 +22,20 @@ const queryClient = new QueryClient({
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
-    <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <ToastProvider>
-          <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-            <WalletProvider>
-              <TxProvider>
-                <App />
-              </TxProvider>
-            </WalletProvider>
-          </BrowserRouter>
-        </ToastProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <ToastProvider>
+            <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+              <WalletProvider>
+                <TxProvider>
+                  <App />
+                </TxProvider>
+              </WalletProvider>
+            </BrowserRouter>
+          </ToastProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   </StrictMode>,
 );

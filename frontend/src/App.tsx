@@ -1,18 +1,18 @@
-import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
+import { lazyRetry } from './lib/lazyRetry';
 
-const Home = lazy(() => import('./pages/Home'));
-const Covenants = lazy(() => import('./pages/Covenants'));
-const CovenantDetail = lazy(() => import('./pages/CovenantDetail'));
-const Create = lazy(() => import('./pages/Create'));
-const Inspect = lazy(() => import('./pages/Inspect'));
-const Ledger = lazy(() => import('./pages/Ledger'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const Tools = lazy(() => import('./pages/Tools'));
-const About = lazy(() => import('./pages/About'));
-const Docs = lazy(() => import('./pages/docs/Docs'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+const Home = lazyRetry(() => import('./pages/Home'));
+const Covenants = lazyRetry(() => import('./pages/Covenants'));
+const CovenantDetail = lazyRetry(() => import('./pages/CovenantDetail'));
+const Create = lazyRetry(() => import('./pages/Create'));
+const Inspect = lazyRetry(() => import('./pages/Inspect'));
+const Ledger = lazyRetry(() => import('./pages/Ledger'));
+const Dashboard = lazyRetry(() => import('./pages/Dashboard'));
+const Tools = lazyRetry(() => import('./pages/Tools'));
+const About = lazyRetry(() => import('./pages/About'));
+const Docs = lazyRetry(() => import('./pages/docs/Docs'));
+const NotFound = lazyRetry(() => import('./pages/NotFound'));
 
 export function App() {
   return (

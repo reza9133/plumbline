@@ -1,4 +1,4 @@
-import { lazy, useRef } from 'react';
+import { Suspense, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Anchor, BookOpen, Coins, Eye, FileText, Landmark, Scale, ShieldAlert } from 'lucide-react';
@@ -11,8 +11,9 @@ import { GenAmount, SectionTitle, TiltCard } from '../components/ui';
 import { SceneGuard } from '../three/webgl';
 import { useTheme } from '../theme/ThemeProvider';
 import { splitBond } from '../lib/rules';
+import { lazyRetry } from '../lib/lazyRetry';
 
-const HeroScene = lazy(() => import('../three/HeroScene'));
+const HeroScene = lazyRetry(() => import('../three/HeroScene'));
 
 function StaticStage() {
   return (
@@ -85,7 +86,9 @@ function Hero() {
         <div ref={stage} className="relative mx-auto aspect-[4/4.4] w-full max-w-[560px]" aria-hidden={false}>
           <div className="absolute inset-0 overflow-hidden rounded-[2rem] border border-line/70 bg-gradient-to-b from-surface/60 to-surface2/40 shadow-card">
             <SceneGuard fallback={<StaticStage />}>
-              <HeroScene dim={theme === 'dim'} animate={!reduce} />
+              <Suspense fallback={<StaticStage />}>
+                <HeroScene dim={theme === 'dim'} animate={!reduce} />
+              </Suspense>
             </SceneGuard>
           </div>
           <motion.div
