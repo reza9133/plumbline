@@ -34,19 +34,41 @@
       <div id="boot" style="min-height:100vh;display:grid;place-items:center;font:600 14px system-ui,sans-serif;color:#6b6556;text-align:center">
         <div>
           <p>Loading Plumbline…</p>
-          <p id="boot-fail" hidden style="margin-top:12px">
-            This is taking longer than it should.
-            <button onclick="location.reload()" style="margin-left:6px;padding:6px 14px;border-radius:8px;border:1px solid #b9b3a2;background:transparent;color:inherit;font:inherit;cursor:pointer">Reload</button>
-          </p>
+          <div id="boot-fail" hidden style="margin-top:12px">
+            <p>
+              This is taking longer than it should.
+              <button onclick="location.reload()" style="margin-left:6px;padding:6px 14px;border-radius:8px;border:1px solid #b9b3a2;background:transparent;color:inherit;font:inherit;cursor:pointer">Reload</button>
+            </p>
+            <p id="boot-why" style="margin-top:10px;font:12px ui-monospace,monospace;opacity:.8;word-break:break-all"></p>
+          </div>
         </div>
       </div>
     </div>
     <script>
-      // If the app has not replaced the loading text after 10 seconds (a script failed to download), offer a reload.
-      setTimeout(function () {
-        var f = document.getElementById('boot-fail');
-        if (f) f.hidden = false;
-      }, 10000);
+      // Boot watchdog. If the app has not replaced the loading text, offer a reload and say which file failed to
+      // download (a failed request fires "error" on its <script>/<link>, which does not bubble, hence capture).
+      (function () {
+        var failed = [];
+        function show() {
+          var f = document.getElementById('boot-fail');
+          if (!f) return;
+          f.hidden = false;
+          var why = document.getElementById('boot-why');
+          if (why && failed.length) why.textContent = 'Could not download: ' + failed.slice(0, 3).join(', ');
+        }
+        window.addEventListener(
+          'error',
+          function (e) {
+            var t = e.target;
+            if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) {
+              failed.push((t.src || t.href || '').replace(location.origin, ''));
+              show();
+            }
+          },
+          true,
+        );
+        setTimeout(show, 10000);
+      })();
     </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>

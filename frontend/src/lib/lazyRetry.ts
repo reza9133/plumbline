@@ -34,7 +34,11 @@ const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
  * redeployed while this tab was open) it reloads once instead of leaving a blank page.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function lazyRetry<T extends ComponentType<any>>(load: () => Promise<{ default: T }>) {
+export function lazyRetry<T extends ComponentType<any>>(
+  load: () => Promise<{ default: T }>,
+  /** `reload: false` is for optional pieces (the 3D scenes): when they cannot be fetched, show the fallback instead of reloading the whole page. */
+  options: { reload?: boolean } = {},
+) {
   return lazy(async () => {
     let lastError: unknown;
     for (let attempt = 0; attempt < 3; attempt++) {
@@ -46,7 +50,7 @@ export function lazyRetry<T extends ComponentType<any>>(load: () => Promise<{ de
         await wait(400 * (attempt + 1));
       }
     }
-    if (reloadOnce()) return new Promise<never>(() => {}); // the page is reloading; keep the loader up
+    if (options.reload !== false && reloadOnce()) return new Promise<never>(() => {}); // the page is reloading; keep the loader up
     throw lastError;
   });
 }

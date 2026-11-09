@@ -13,7 +13,7 @@ import { useTheme } from '../theme/ThemeProvider';
 import { splitBond } from '../lib/rules';
 import { lazyRetry } from '../lib/lazyRetry';
 
-const HeroScene = lazyRetry(() => import('../three/HeroScene'));
+const HeroScene = lazyRetry(() => import('../three/HeroScene'), { reload: false });
 
 function StaticStage() {
   return (

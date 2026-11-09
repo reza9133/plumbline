@@ -37,7 +37,7 @@ import { tenetTones } from '../lib/tones';
 import { lazyRetry } from '../lib/lazyRetry';
 import { StateDiagram } from '../components/StateDiagram';
 
-const PlumbWall = lazyRetry(() => import('../three/PlumbWall'));
+const PlumbWall = lazyRetry(() => import('../three/PlumbWall'), { reload: false });
 
 const TONE_LABEL = {
   idle: 'Not read yet',
