@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import type { ReactNode } from 'react';
+import { RetryImg } from './RetryImg';
 
 const FULL = '/mochi/mochi-full.webp';
 const FULL_SM = '/mochi/mochi-full-sm.webp';
@@ -17,7 +18,7 @@ export function MochiFull({
   alt?: string;
 }) {
   return (
-    <img
+    <RetryImg
       src={FULL}
       srcSet={`${FULL_SM} 336w, ${FULL} 671w`}
       sizes="(max-width: 640px) 60vw, 340px"
@@ -41,7 +42,7 @@ export function MochiHead({
   alt?: string;
 }) {
   return (
-    <img
+    <RetryImg
       src={size > 140 ? HEAD : HEAD_SM}
       alt={alt}
       width={size}

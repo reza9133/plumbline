@@ -3,6 +3,7 @@ import { Github } from 'lucide-react';
 import { CHAIN, CONTRACT_ADDRESS, LINKS, explorerAddress } from '../config';
 import { BuiltOnGenLayer, GenLayerLogo, PlumbMark } from '../components/Logo';
 import { MochiFull } from '../components/Mochi';
+import { RetryImg } from '../components/RetryImg';
 import { Address } from '../components/ui';
 import { XIcon } from '../components/Layout';
 
@@ -84,7 +85,7 @@ export default function About() {
             'Shown to credit the network the contract runs on.',
           ],
           [
-            <img key="c" src="/mochi/mochi-head-sm.webp" alt="" className="h-11 w-11" />,
+            <RetryImg key="c" src="/mochi/mochi-head-sm.webp" alt="" className="h-11 w-11" />,
             'Mochi',
             'The mascot: cat helmet, red hoodie, a screen where the face should be.',
           ],

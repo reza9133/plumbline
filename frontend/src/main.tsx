@@ -17,7 +17,13 @@ window.addEventListener('vite:preloadError', (e) => {
 });
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: { staleTime: 8_000, retry: 1, refetchOnWindowFocus: true } },
+  defaultOptions: { queries: {
+      staleTime: 8_000,
+      // The RPC is a different host from the site and can be slow to answer; try a few times before showing an error.
+      retry: 3,
+      retryDelay: (attempt: number) => Math.min(1_000 * 2 ** attempt, 6_000),
+      refetchOnWindowFocus: true,
+    } },
 });
 
 createRoot(document.getElementById('root') as HTMLElement).render(
