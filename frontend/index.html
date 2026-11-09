@@ -28,6 +28,54 @@
         } catch (e) {}
       })();
     </script>
+    <script>
+      // Boot watchdog. A failed request for the stylesheet or the app script fires "error" on its element (it does not
+      // bubble, hence capture). On a flaky connection the first try often fails while the next one works, so the
+      // failed file is requested again (up to 3 times, with a new URL so nothing cached or half-failed is reused)
+      // before giving up and naming the file on screen.
+      (function () {
+        var failed = [];
+        var tries = {};
+        function show() {
+          var f = document.getElementById('boot-fail');
+          if (!f) return;
+          f.hidden = false;
+          var why = document.getElementById('boot-why');
+          if (why && failed.length) why.textContent = 'Could not download: ' + failed.slice(0, 3).join(', ');
+        }
+        window.addEventListener(
+          'error',
+          function (e) {
+            var t = e.target;
+            if (!t || !t.tagName) return;
+            var isScript = t.tagName === 'SCRIPT' && t.type === 'module';
+            var isCss = t.tagName === 'LINK' && t.rel === 'stylesheet';
+            if (!isScript && !isCss) return;
+            var key = (t.src || t.href || '').replace(/[?&]r=\d+$/, '');
+            var n = (tries[key] = (tries[key] || 0) + 1);
+            if (n <= 3) {
+              setTimeout(function () {
+                var c = document.createElement(isScript ? 'script' : 'link');
+                if (isScript) {
+                  c.type = 'module';
+                  c.src = key + '?r=' + n;
+                } else {
+                  c.rel = 'stylesheet';
+                  c.href = key + '?r=' + n;
+                }
+                if (t.crossOrigin !== null) c.crossOrigin = t.crossOrigin;
+                document.head.appendChild(c);
+              }, 800 * n);
+              return;
+            }
+            failed.push(key.replace(location.origin, ''));
+            show();
+          },
+          true,
+        );
+        setTimeout(show, 10000);
+      })();
+    </script>
   </head>
   <body>
     <div id="root">
@@ -44,32 +92,6 @@
         </div>
       </div>
     </div>
-    <script>
-      // Boot watchdog. If the app has not replaced the loading text, offer a reload and say which file failed to
-      // download (a failed request fires "error" on its <script>/<link>, which does not bubble, hence capture).
-      (function () {
-        var failed = [];
-        function show() {
-          var f = document.getElementById('boot-fail');
-          if (!f) return;
-          f.hidden = false;
-          var why = document.getElementById('boot-why');
-          if (why && failed.length) why.textContent = 'Could not download: ' + failed.slice(0, 3).join(', ');
-        }
-        window.addEventListener(
-          'error',
-          function (e) {
-            var t = e.target;
-            if (t && (t.tagName === 'SCRIPT' || t.tagName === 'LINK')) {
-              failed.push((t.src || t.href || '').replace(location.origin, ''));
-              show();
-            }
-          },
-          true,
-        );
-        setTimeout(show, 10000);
-      })();
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
