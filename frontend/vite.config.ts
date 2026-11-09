@@ -26,23 +26,10 @@ export default defineConfig({
     target: 'es2022',
     sourcemap: false,
     chunkSizeWarningLimit: 900,
-    rollupOptions: {
-      output: {
-        manualChunks(id: string) {
-          if (id.includes('node_modules/three/')) return 'three';
-          if (id.includes('@react-three')) return 'r3f';
-          if (
-            id.includes('node_modules/genlayer-js') ||
-            id.includes('node_modules/viem') ||
-            id.includes('node_modules/@noble') ||
-            id.includes('node_modules/@scure') ||
-            id.includes('node_modules/abitype')
-          )
-            return 'chain';
-          if (id.includes('node_modules/framer-motion')) return 'motion';
-        },
-      },
-    },
+    // No manualChunks on purpose. Forcing three / r3f / genlayer-js into named chunks made Rollup park Vite's
+    // preload helper and the CommonJS helpers inside them, so the entry file statically imported ~1.7 MB of 3D
+    // and chain code and the app could not start until all of it had arrived (blank page when any request failed).
+    // Left alone, those libraries stay behind the dynamic imports that actually need them.
   },
   test: {
     environment: 'jsdom',
